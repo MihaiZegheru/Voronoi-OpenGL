@@ -9,6 +9,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <window.h>
+#include <voronoiseed.h>
 #include <apptime.h>
 #include <renderer.h>
 #include <debug.h>
@@ -16,6 +17,11 @@
 
 int WINDOW_WIDTH = 1000;
 int WINDOW_HEIGHT = 1000;
+
+#define SEEDS_COUNT 40 
+
+std::vector <VoronoiSeed*> seeds;
+
 
 void OnWindowResize(GLFWwindow* window, int width, int height) {
     WINDOW_WIDTH = width;
@@ -31,6 +37,15 @@ void GenerateDummyVAO() {
     GLuint vao;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
+}
+
+void GenerateSeeds() {
+    for (size_t i = 0; i < SEEDS_COUNT; ++i) {
+        glm::vec2 position;
+        position.x = RandomFloat() * WINDOW_WIDTH;
+        position.y = RandomFloat() * WINDOW_HEIGHT;
+        VoronoiSeed* seed = new VoronoiSeed();
+    }
 }
 
 int main() {
@@ -49,7 +64,7 @@ int main() {
     GLint seedColor = glGetUniformLocation(shaderProgram, "seedColor");
     glUniform2f(screenRes, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    glfwSetInputMode(window.GetInstance(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(window.GetInstance(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
     while (!glfwWindowShouldClose(window.GetInstance())) {
         Time::GetInstance().ComputeDeltaTime(glfwGetTime());
@@ -59,7 +74,7 @@ int main() {
            
         srand(0);
 
-        for (size_t i = 0; i < 10; i++) {
+        for (size_t i = 0; i < 10; ++i) {
             glUniform2f(seedPos, RandomFloat() * WINDOW_WIDTH, RandomFloat() * WINDOW_HEIGHT);
             glUniform4f(seedColor, RandomFloat(), RandomFloat(), RandomFloat(), 1);
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

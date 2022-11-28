@@ -12,6 +12,7 @@ set(HEADERS
 	"src/apptime.h"
 	"src/renderer.h"
 	"src/debug.h"
+	"src/voronoiseed.h"
 )
 set(IMPLEMENTATION 
 	"src/main.cpp"
@@ -19,6 +20,7 @@ set(IMPLEMENTATION
 	"src/apptime.cpp"
 	"src/renderer.cpp"
 	"src/debug.cpp"
+	"src/voronoiseed.cpp"
 
 )
 
