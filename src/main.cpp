@@ -15,10 +15,10 @@
 #include <debug.h>
 
 
-int WINDOW_WIDTH = 1000;
-int WINDOW_HEIGHT = 1000;
+int WINDOW_WIDTH = 2000;
+int WINDOW_HEIGHT = 900;
 
-#define SEEDS_COUNT 40 
+#define SEEDS_COUNT 20 
 
 std::vector <VoronoiSeed*> seeds;
 
@@ -62,8 +62,8 @@ void GenerateSeeds() {
         color.w = 1.f;
 
         glm::vec2 velocity;
-        velocity.x = Lerp(-100, 100, RandomFloat());
-        velocity.y = Lerp(-100, 100, RandomFloat());
+        velocity.x = Lerp(100, 300, RandomFloat());
+        velocity.y = Lerp(100, 300, RandomFloat());
 
         VoronoiSeed* seed = new VoronoiSeed(position, color);
         seed->SetVelocity(velocity);
@@ -87,6 +87,8 @@ int main() {
     GLint screenRes = glGetUniformLocation(shaderProgram, "screenRes");
     GLint seedPos = glGetUniformLocation(shaderProgram, "seedPos");
     GLint seedColor = glGetUniformLocation(shaderProgram, "seedColor");
+    GLint seedMarkerRadius = glGetUniformLocation(shaderProgram, "seedMarkerRadius");
+    GLint seedMarkerColor = glGetUniformLocation(shaderProgram, "seedMarkerColor");
     glUniform2f(screenRes, WINDOW_WIDTH, WINDOW_HEIGHT);
 
     glfwSetInputMode(window.GetInstance(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -112,8 +114,13 @@ int main() {
         for (size_t i = 0; i < seeds.size(); ++i) {
             glm::vec2 position = seeds[i]->GetPosition();
             glm::vec4 color = seeds[i]->GetColor();
+            float markerRadius = seeds[i]->GetMarkerRadius();
+            glm::vec4 markerColor = seeds[i]->GetMarkerColor();
+
             glUniform2f(seedPos, position.x, position.y);
             glUniform4f(seedColor, color.x, color.y, color.z, color.w);
+            glUniform1f(seedMarkerRadius, markerRadius);
+            glUniform4f(seedMarkerColor, markerColor.x, markerColor.y, markerColor.z, markerColor.w);
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         }
 

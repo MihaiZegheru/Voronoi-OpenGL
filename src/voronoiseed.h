@@ -17,6 +17,12 @@ public:
 	inline glm::vec4 GetColor() { return m_color; }
 	inline void SetColor(glm::vec4 color) { m_color = color; }
 
+	inline float GetMarkerRadius() { return m_markerRadius; }
+	inline void SetMarkerRadius(float markerRadius) { m_markerRadius = markerRadius; }
+
+	inline glm::vec4 GetMarkerColor() { return m_markerColor; }
+	inline void SetMarkerColor(glm::vec4 markerColor) { m_markerColor = markerColor; }
+
 	inline glm::vec2 GetVelocity() { return m_velocity; }
 	inline void SetVelocity(glm::vec2 velocity) { m_velocity = velocity; }
 
@@ -35,6 +41,9 @@ public:
 private:
 	glm::vec2 m_position;
 	glm::vec4 m_color;
+
+	float m_markerRadius;
+	glm::vec4 m_markerColor;
 
 	glm::vec2 m_velocity;
 
