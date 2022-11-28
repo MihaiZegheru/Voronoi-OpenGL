@@ -9,7 +9,7 @@
 
 namespace Renderer
 {
-	void Init();
+	GLuint Init();
 	void Destroy();
 };
 

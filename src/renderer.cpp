@@ -88,12 +88,14 @@ std::vector<char> ReadShader(std::string path)
     return buffer;
 }
 
-void InitShaders()
+GLuint InitShaders()
 {
     std::vector<char> fragmentShaderBuffer = ReadShader("../src/shaders/defaultfragmentshader.glsl");
     std::vector<char> vertexShaderBuffer = ReadShader("../src/shaders/defaultvertexshader.glsl");
     GLuint shaderProgram = CreateDefaultShaderProgram(fragmentShaderBuffer, vertexShaderBuffer);
     glUseProgram(shaderProgram);
+
+    return shaderProgram;
 }
 
 void InitGL()
@@ -104,10 +106,11 @@ void InitGL()
     glEnable(GL_DEPTH_TEST);
 }
 
-void Renderer::Init()
+GLuint Renderer::Init()
 {
-    InitShaders();
+    GLuint shaderProgram = InitShaders();
     InitGL();
+    return shaderProgram;
 }
 
 void Renderer::Destroy()
