@@ -44,7 +44,15 @@ void GenerateSeeds() {
         glm::vec2 position;
         position.x = RandomFloat() * WINDOW_WIDTH;
         position.y = RandomFloat() * WINDOW_HEIGHT;
-        VoronoiSeed* seed = new VoronoiSeed();
+
+        glm::vec4 color;
+        color.x = RandomFloat();
+        color.y = RandomFloat();
+        color.z = RandomFloat();
+        color.w = 1.f;
+
+        VoronoiSeed* seed = new VoronoiSeed(position, color);
+        seeds.push_back(seed);
     }
 }
 
@@ -66,17 +74,24 @@ int main() {
 
     glfwSetInputMode(window.GetInstance(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
+    // Generate the Voronoi seeds
+    GenerateSeeds();
+
     while (!glfwWindowShouldClose(window.GetInstance())) {
         Time::GetInstance().ComputeDeltaTime(glfwGetTime());
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         GenerateDummyVAO();
-           
+        
+        // Make a determinstic random sys
         srand(0);
 
-        for (size_t i = 0; i < 10; ++i) {
-            glUniform2f(seedPos, RandomFloat() * WINDOW_WIDTH, RandomFloat() * WINDOW_HEIGHT);
-            glUniform4f(seedColor, RandomFloat(), RandomFloat(), RandomFloat(), 1);
+
+        for (size_t i = 0; i < seeds.size(); ++i) {
+            glm::vec2 position = seeds[i]->GetPosition();
+            glm::vec4 color = seeds[i]->GetColor();
+            glUniform2f(seedPos, position.x, position.y);
+            glUniform4f(seedColor, color.x, color.y, color.z, color.w);
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         }
 
