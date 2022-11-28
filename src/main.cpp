@@ -23,6 +23,10 @@ void OnWindowResize(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
+float RandomFloat() {
+    return (float)rand() / RAND_MAX;
+}
+
 void GenerateDummyVAO() {
     GLuint vao;
     glGenVertexArrays(1, &vao);
@@ -52,14 +56,14 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         GenerateDummyVAO();
+           
+        srand(0);
 
-        glUniform2f(seedPos, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
-        glUniform4f(seedColor, 0.2, 0.2, 0.1, 1);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-        glUniform2f(seedPos, WINDOW_WIDTH / 3, WINDOW_HEIGHT / 3);
-        glUniform4f(seedColor, 0.8, 0.4, 0.1, 1);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        for (size_t i = 0; i < 10; i++) {
+            glUniform2f(seedPos, RandomFloat() * WINDOW_WIDTH, RandomFloat() * WINDOW_HEIGHT);
+            glUniform4f(seedColor, RandomFloat(), RandomFloat(), RandomFloat(), 1);
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        }
 
         glfwSwapBuffers(window.GetInstance());
         glfwPollEvents();
