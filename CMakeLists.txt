@@ -8,9 +8,18 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 
 set(HEADERS
+	"src/window.h"
+	"src/apptime.h"
+	"src/renderer.h"
+	"src/debug.h"
 )
 set(IMPLEMENTATION 
 	"src/main.cpp"
+	"src/window.cpp"
+	"src/apptime.cpp"
+	"src/renderer.cpp"
+	"src/debug.cpp"
+
 )
 
 set(LIBS "lib/glad/src/glad.c")
