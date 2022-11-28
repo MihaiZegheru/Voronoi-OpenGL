@@ -13,6 +13,8 @@ public:
 	~Window();
 
 	inline GLFWwindow* GetInstance() const { return m_GlfwWindow; }
+	inline int GetWindowWidth() { return m_windowWidth; }
+	inline int GetWindowHeight() { return m_windowHeight; }
 
 	int Destroy();
 

@@ -27,10 +27,20 @@ void OnWindowResize(GLFWwindow* window, int width, int height) {
     WINDOW_WIDTH = width;
     WINDOW_HEIGHT = height;
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+    for (size_t i = 0; i < seeds.size(); ++i) {
+        seeds[i]->SetMovementBounds(glm::vec2(WINDOW_WIDTH, WINDOW_HEIGHT));
+    }
+    // TO DO: Update positions
 }
 
 float RandomFloat() {
     return (float)rand() / RAND_MAX;
+}
+
+float Lerp(float a, float b, float f)
+{
+    return a * (1.0 - f) + (b * f);
 }
 
 void GenerateDummyVAO() {
@@ -51,7 +61,14 @@ void GenerateSeeds() {
         color.z = RandomFloat();
         color.w = 1.f;
 
+        glm::vec2 velocity;
+        velocity.x = Lerp(-100, 100, RandomFloat());
+        velocity.y = Lerp(-100, 100, RandomFloat());
+
         VoronoiSeed* seed = new VoronoiSeed(position, color);
+        seed->SetVelocity(velocity);
+        seed->SetMovementBounds(glm::vec2(WINDOW_WIDTH, WINDOW_HEIGHT));
+
         seeds.push_back(seed);
     }
 }
@@ -86,7 +103,12 @@ int main() {
         // Make a determinstic random sys
         srand(0);
 
+        // Handle Tick()
+        for (size_t i = 0; i < seeds.size(); ++i) {
+            seeds[i]->Tick(Time::GetInstance().GetDeltaTime());
+        }
 
+        // Handle Draw
         for (size_t i = 0; i < seeds.size(); ++i) {
             glm::vec2 position = seeds[i]->GetPosition();
             glm::vec4 color = seeds[i]->GetColor();

@@ -17,17 +17,28 @@ public:
 	inline glm::vec4 GetColor() { return m_color; }
 	inline void SetColor(glm::vec4 color) { m_color = color; }
 
+	inline glm::vec2 GetVelocity() { return m_velocity; }
+	inline void SetVelocity(glm::vec2 velocity) { m_velocity = velocity; }
+
+	inline void SetMovementBounds(glm::vec2 movementBounds) { m_movementBounds = movementBounds; }
+
 	/**
 	* @brief Called once every frame
 	* 
 	* @param deltaTime
 	* @return * Tick 
 	*/
-	void Tick(float deltaTime);
+	void Tick(double deltaTime);
+
+	void HandleMovement(double deltaTime);
 
 private:
 	glm::vec2 m_position;
 	glm::vec4 m_color;
+
+	glm::vec2 m_velocity;
+
+	glm::vec2 m_movementBounds;
 };
 
 
