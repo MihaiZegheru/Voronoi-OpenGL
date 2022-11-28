@@ -23,6 +23,13 @@ void OnWindowResize(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 }
 
+void GenerateDummyVAO() {
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+}
+
+
 int main() {
     Window window(WINDOW_WIDTH, WINDOW_HEIGHT, "Voronoi");
 
@@ -40,7 +47,10 @@ int main() {
 
     while (!glfwWindowShouldClose(window.GetInstance())) {
         Time::GetInstance().ComputeDeltaTime(glfwGetTime());
-
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+         
+        GenerateDummyVAO();
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
         glfwSwapBuffers(window.GetInstance());
         glfwPollEvents();
