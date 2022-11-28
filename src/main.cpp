@@ -62,8 +62,8 @@ void GenerateSeeds() {
         color.w = 1.f;
 
         glm::vec2 velocity;
-        velocity.x = Lerp(100, 300, RandomFloat());
-        velocity.y = Lerp(100, 300, RandomFloat());
+        velocity.x = Lerp(100, 300, RandomFloat()) * ((RandomFloat() < .5f) ? 1 : -1);
+        velocity.y = Lerp(100, 300, RandomFloat()) * ((RandomFloat() < .5f) ? 1 : -1);
 
         VoronoiSeed* seed = new VoronoiSeed(position, color);
         seed->SetVelocity(velocity);
