@@ -10,6 +10,7 @@
 
 #include <window.h>
 #include <voronoiseed.h>
+#include <mathutility.h>
 #include <apptime.h>
 #include <renderer.h>
 #include <debug.h>
@@ -38,30 +39,7 @@ void OnWindowResize(GLFWwindow* window, int width, int height) {
     // TO DO: Update positions
 }
 
-/**
-* @brief Lerps between two points
-*
-* @param a
-* @param b
-* @param step
-* @return float
-*/
-float RandomFloat() {
-    return (float)rand() / RAND_MAX;
-}
 
-/**
-* @brief Lerps between two points
-*
-* @param a
-* @param b
-* @param step
-* @return float
-*/
-float Lerp(float a, float b, float step)
-{
-    return a * (1.0 - step) + (b * step);
-}
 
 /**
 * @brief Generate random Voronoi Seeds
@@ -70,19 +48,19 @@ float Lerp(float a, float b, float step)
 void GenerateSeeds() {
     for (size_t i = 0; i < SEEDS_COUNT; ++i) {
         glm::vec2 position;
-        position.x = RandomFloat() * WINDOW_WIDTH;
-        position.y = RandomFloat() * WINDOW_HEIGHT;
+        position.x = MathUtility::RandomFloat() * WINDOW_WIDTH;
+        position.y = MathUtility::RandomFloat() * WINDOW_HEIGHT;
 
         glm::vec4 color;
-        color.x = RandomFloat();
-        color.y = RandomFloat();
-        color.z = RandomFloat();
+        color.x = MathUtility::RandomFloat();
+        color.y = MathUtility::RandomFloat();
+        color.z = MathUtility::RandomFloat();
         color.w = 1.f;
 
         // TO DO: Add negative velocity
         glm::vec2 velocity;
-        velocity.x = Lerp(50, 200, RandomFloat()) * ((RandomFloat() < .5f) ? 1 : -1);
-        velocity.y = Lerp(50, 200, RandomFloat()) * ((RandomFloat() < .5f) ? 1 : -1);
+        velocity.x = MathUtility::Lerp(50, 200, MathUtility::RandomFloat()) * ((MathUtility::RandomFloat() < .5f) ? 1 : -1);
+        velocity.y = MathUtility::Lerp(50, 200, MathUtility::RandomFloat()) * ((MathUtility::RandomFloat() < .5f) ? 1 : -1);
 
         VoronoiSeed* seed = new VoronoiSeed(position, color);
         seed->SetVelocity(velocity);
@@ -119,7 +97,7 @@ int main() {
         Time::GetInstance().ComputeDeltaTime(glfwGetTime());
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        Debug::Log(1.f / Time::GetInstance().GetDeltaTime());
+        //Debug::Log(1.f / Time::GetInstance().GetDeltaTime());
         Renderer::GenerateDummyVAO();
         
         // Make a determinstic random sys

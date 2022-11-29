@@ -13,6 +13,7 @@ set(HEADERS
 	"src/renderer.h"
 	"src/debug.h"
 	"src/voronoiseed.h"
+	"src/mathutility.h"
 )
 set(IMPLEMENTATION 
 	"src/main.cpp"
@@ -21,7 +22,7 @@ set(IMPLEMENTATION
 	"src/renderer.cpp"
 	"src/debug.cpp"
 	"src/voronoiseed.cpp"
-
+	"src/mathutility.cpp"
 )
 
 set(LIBS "lib/glad/src/glad.c")
