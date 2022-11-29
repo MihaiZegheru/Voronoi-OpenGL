@@ -26,6 +26,7 @@ public:
 	inline glm::vec2 GetVelocity() { return m_velocity; }
 	inline void SetVelocity(glm::vec2 velocity) { m_velocity = velocity; }
 
+
 	inline void SetMovementBounds(glm::vec2 movementBounds) { m_movementBounds = movementBounds; }
 
 	/**
@@ -36,6 +37,12 @@ public:
 	*/
 	void Tick(double deltaTime);
 
+	/**
+	* @brief Update position based on velocity
+	*
+	* @param deltaTime
+	* @return * HandleMovement
+	*/
 	void HandleMovement(double deltaTime);
 
 private:

@@ -11,6 +11,12 @@ namespace Renderer
 {
 	GLuint Init();
 	void Destroy();
+
+	/**
+	* @brief Generate empty vao
+	*
+	*/
+	void GenerateDummyVAO();
 };
 
 #endif  // SRC_RENDERER_H__

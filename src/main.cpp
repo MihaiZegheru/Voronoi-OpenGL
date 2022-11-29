@@ -23,6 +23,10 @@ int WINDOW_HEIGHT = 1000;
 std::vector <VoronoiSeed*> seeds;
 
 
+/**
+* @brief Window resize Callback
+*
+*/
 void OnWindowResize(GLFWwindow* window, int width, int height) {
     WINDOW_WIDTH = width;
     WINDOW_HEIGHT = height;
@@ -34,21 +38,35 @@ void OnWindowResize(GLFWwindow* window, int width, int height) {
     // TO DO: Update positions
 }
 
+/**
+* @brief Lerps between two points
+*
+* @param a
+* @param b
+* @param step
+* @return float
+*/
 float RandomFloat() {
     return (float)rand() / RAND_MAX;
 }
 
-float Lerp(float a, float b, float f)
+/**
+* @brief Lerps between two points
+*
+* @param a
+* @param b
+* @param step
+* @return float
+*/
+float Lerp(float a, float b, float step)
 {
-    return a * (1.0 - f) + (b * f);
+    return a * (1.0 - step) + (b * step);
 }
 
-void GenerateDummyVAO() {
-    GLuint vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-}
-
+/**
+* @brief Generate random Voronoi Seeds
+*
+*/
 void GenerateSeeds() {
     for (size_t i = 0; i < SEEDS_COUNT; ++i) {
         glm::vec2 position;
@@ -102,7 +120,7 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         Debug::Log(1.f / Time::GetInstance().GetDeltaTime());
-        GenerateDummyVAO();
+        Renderer::GenerateDummyVAO();
         
         // Make a determinstic random sys
         srand(0);

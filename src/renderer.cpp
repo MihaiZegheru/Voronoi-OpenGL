@@ -106,6 +106,12 @@ void InitGL()
     glEnable(GL_DEPTH_TEST);
 }
 
+void Renderer::GenerateDummyVAO() {
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+}
+
 GLuint Renderer::Init()
 {
     GLuint shaderProgram = InitShaders();
