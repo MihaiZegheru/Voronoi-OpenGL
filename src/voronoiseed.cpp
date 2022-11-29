@@ -49,5 +49,7 @@ void VoronoiSeed::HandleMovement(double deltaTime) {
 		m_velocity.y *= -1.f;
 	}
 
+	newPosition = m_position + m_velocity * (float)deltaTime;
+
 	m_position = newPosition;
 }

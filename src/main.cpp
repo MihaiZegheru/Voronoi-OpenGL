@@ -16,9 +16,9 @@
 
 
 int WINDOW_WIDTH = 2000;
-int WINDOW_HEIGHT = 900;
+int WINDOW_HEIGHT = 1000;
 
-#define SEEDS_COUNT 20 
+#define SEEDS_COUNT 20
 
 std::vector <VoronoiSeed*> seeds;
 
@@ -61,9 +61,10 @@ void GenerateSeeds() {
         color.z = RandomFloat();
         color.w = 1.f;
 
+        // TO DO: Add negative velocity
         glm::vec2 velocity;
-        velocity.x = Lerp(100, 300, RandomFloat()) * ((RandomFloat() < .5f) ? 1 : -1);
-        velocity.y = Lerp(100, 300, RandomFloat()) * ((RandomFloat() < .5f) ? 1 : -1);
+        velocity.x = Lerp(50, 200, RandomFloat()) * ((RandomFloat() < .5f) ? 1 : -1);
+        velocity.y = Lerp(50, 200, RandomFloat()) * ((RandomFloat() < .5f) ? 1 : -1);
 
         VoronoiSeed* seed = new VoronoiSeed(position, color);
         seed->SetVelocity(velocity);
@@ -100,6 +101,7 @@ int main() {
         Time::GetInstance().ComputeDeltaTime(glfwGetTime());
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        Debug::Log(1.f / Time::GetInstance().GetDeltaTime());
         GenerateDummyVAO();
         
         // Make a determinstic random sys

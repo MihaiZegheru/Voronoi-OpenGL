@@ -11,13 +11,37 @@ in vec2 uv;
 
 out vec4 fragColor;
 
+float EuclideanDistance(vec2 a, vec2 b) {
+    float dx = b.x - a.x;
+    float dy = b.y - a.y;
+    return sqrt(dx * dx + dy * dy);
+}
+
+float ManhattanDistance(vec2 a, vec2 b) {
+    float dx = abs(b.x - a.x);
+    float dy = abs(b.y - a.y);
+    return sqrt(dx + dy);
+}
+
+float MinkowskiDistance(vec2 a, vec2 b, float p) {
+    float dx = pow(abs(b.x - a.x), p);
+    float dy = pow(abs(b.y - a.y), p);
+    return pow(dx + dy, 1 / p);
+}
+
+float ChebyshevDistance(vec2 a, vec2 b) {
+    float dx = abs(b.x - a.x);
+    float dy = abs(b.y - a.y);
+    return max(dx, dy);
+}
+
 void main() {
     if (length(gl_FragCoord.xy - seedPos) < seedMarkerRadius) {
         gl_FragDepth = 0;
         fragColor = seedMarkerColor;
     }
     else {
-        gl_FragDepth = length(gl_FragCoord.xy - seedPos) / length(screenRes);
+        gl_FragDepth =  MinkowskiDistance(seedPos, gl_FragCoord.xy, 0.8f) / length(screenRes);
         fragColor = seedColor;
     }
 
