@@ -1,6 +1,6 @@
-#include <window.h>
+#include <window/window.h>
 
-#include <debug.h>
+#include <utility/debug.h>
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -28,7 +28,7 @@ void Window::Init(int windowWidth, int windowHeight, const char* windowName) {
     InitGlad();
 
     glViewport(0, 0, windowWidth, windowHeight);
-    glClearColor(0.1, 0.1, 0.1, 1);
+    glClearColor((GLfloat)0.1, (GLfloat)0.1, (GLfloat)0.1, (GLfloat)1);
 }
 
 Window::~Window() {

@@ -3,7 +3,7 @@
 
 #include <glm/glm.hpp>
 
-static class VoronoiSeed
+class VoronoiSeed
 {
 public:
 	VoronoiSeed();

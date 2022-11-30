@@ -8,23 +8,23 @@ set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
 
 set(HEADERS
-	"src/window.h"
-	"src/apptime.h"
+	"src/window/window.h"
+	"src/utility/apptime.h"
 	"src/renderer.h"
-	"src/debug.h"
+	"src/utility/debug.h"
 	"src/voronoiseed.h"
-	"src/mathutility.h"
-	"src/inputmanager.h"
+	"src/utility/mathutility.h"
+	"src/input/inputmanager.h"
 )
 set(IMPLEMENTATION 
 	"src/main.cpp"
-	"src/window.cpp"
-	"src/apptime.cpp"
+	"src/window/window.cpp"
+	"src/utility/apptime.cpp"
 	"src/renderer.cpp"
-	"src/debug.cpp"
+	"src/utility/debug.cpp"
 	"src/voronoiseed.cpp"
-	"src/mathutility.cpp"
-	"src/inputmanager.cpp"
+	"src/utility/mathutility.cpp"
+	"src/input/inputmanager.cpp"
 )
 
 set(LIBS "lib/glad/src/glad.c")

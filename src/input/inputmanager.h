@@ -14,7 +14,7 @@
 #include <iostream>
 #include <iomanip>
 
-#include <debug.h>
+#include <utility/debug.h>
 
 
 class InputManager

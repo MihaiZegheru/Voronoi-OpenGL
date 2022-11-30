@@ -1,6 +1,6 @@
 #include <voronoiseed.h>
 
-#include <window.h>
+#include <window/window.h>
 
 
 VoronoiSeed::VoronoiSeed() {
