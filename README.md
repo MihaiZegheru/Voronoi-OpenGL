@@ -88,9 +88,9 @@ You can set the initial window size by changing these fields in `main.cpp`
 ```
 
 ## Credits
-[How I got the idea](https://www.youtube.com/watch?v=kT-Mz87-HcQ)
+* [How I got the idea](https://www.youtube.com/watch?v=kT-Mz87-HcQ)
 
-[About distances](https://towardsdatascience.com/9-distance-measures-in-data-science-918109d069fa)
+* [About distances](https://towardsdatascience.com/9-distance-measures-in-data-science-918109d069fa)
 
 
 ## License
