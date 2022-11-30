@@ -16,10 +16,10 @@
 #include <debug.h>
 
 
-int WINDOW_WIDTH = 2000;
-int WINDOW_HEIGHT = 1000;
+int WINDOW_WIDTH = 500;
+int WINDOW_HEIGHT = 500;
 
-#define SEEDS_COUNT 20
+#define SEEDS_COUNT 3
 
 std::vector <VoronoiSeed*> seeds;
 
@@ -32,11 +32,12 @@ std::vector <VoronoiSeed*> seeds;
 * @param height
 *
 */
-void OnWindowResize(GLFWwindow* window, int width, int height) {
+void OnWindowResize(GLFWwindow* window, int width, int height, int deltaWidth, int deltaHeight) {
     for (size_t i = 0; i < seeds.size(); ++i) {
         seeds[i]->SetMovementBounds(glm::vec2(width, height));
+        glm::vec2 newPosition = seeds[i]->GetPosition() + glm::vec2(deltaWidth, deltaHeight);
+        seeds[i]->SetPosition(newPosition);
     }
-    // TO DO: Update positions
 }
 
 /**
@@ -74,12 +75,14 @@ void GenerateSeeds() {
 int main() {
     Window::GetInstance()->Init(WINDOW_WIDTH, WINDOW_HEIGHT, "Voronoi");
     Window::GetInstance()->SetFunctionCallbackOnWindowResize(OnWindowResize);
+    int windowWidth = Window::GetInstance()->GetWindowWidth();
+    int windowHeight = Window::GetInstance()->GetWindowHeight();
 
     Time::GetInstance().Init(glfwGetTime());
 
     GLuint shaderProgram = Renderer::Init();
 
-    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    glViewport(0, 0, windowWidth, windowHeight);
     glClearColor(0.2, 0.2, 0.2, 1);
 
     GLint screenRes = glGetUniformLocation(shaderProgram, "screenRes");
@@ -87,7 +90,7 @@ int main() {
     GLint seedColor = glGetUniformLocation(shaderProgram, "seedColor");
     GLint seedMarkerRadius = glGetUniformLocation(shaderProgram, "seedMarkerRadius");
     GLint seedMarkerColor = glGetUniformLocation(shaderProgram, "seedMarkerColor");
-    glUniform2f(screenRes, WINDOW_WIDTH, WINDOW_HEIGHT);
+    glUniform2f(screenRes, windowWidth, windowHeight);
 
     glfwSetInputMode(Window::GetInstance()->GetGlfwInstance(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
@@ -97,6 +100,8 @@ int main() {
     while (!glfwWindowShouldClose(Window::GetInstance()->GetGlfwInstance())) {
         Time::GetInstance().ComputeDeltaTime(glfwGetTime());
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        windowWidth = Window::GetInstance()->GetWindowWidth();
+        windowHeight = Window::GetInstance()->GetWindowHeight();
 
         //Debug::Log(1.f / Time::GetInstance().GetDeltaTime());
         Renderer::GenerateDummyVAO();
@@ -116,6 +121,7 @@ int main() {
             float markerRadius = seeds[i]->GetMarkerRadius();
             glm::vec4 markerColor = seeds[i]->GetMarkerColor();
 
+            glUniform2f(screenRes, windowWidth, windowHeight);
             glUniform2f(seedPos, position.x, position.y);
             glUniform4f(seedColor, color.x, color.y, color.z, color.w);
             glUniform1f(seedMarkerRadius, markerRadius);

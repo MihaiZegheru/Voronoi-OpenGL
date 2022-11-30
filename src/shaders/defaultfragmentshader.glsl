@@ -10,7 +10,7 @@ layout (location = 4) uniform vec4 seedMarkerColor;
 in vec2 uv;
 out vec4 fragColor;
 
-#define MINKOWSKI_VALUE 0.8f
+#define MINKOWSKI_VALUE 2
 
 
 float EuclideanDistance(vec2 a, vec2 b) {

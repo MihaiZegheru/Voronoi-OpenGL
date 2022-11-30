@@ -27,7 +27,7 @@ public:
 	inline int GetWindowHeight() { return m_windowHeight; }
 
 	inline void SetFunctionCallbackOnWindowResize(
-		void (*functionCallbackOnWindowResize)(GLFWwindow*, int, int)) {
+		void (*functionCallbackOnWindowResize)(GLFWwindow*, int, int, int, int)) {
 		m_FunctionCallbackOnWindowResize = functionCallbackOnWindowResize;
 	}
 
@@ -57,7 +57,8 @@ private:
 	int m_windowHeight;
 	const char* m_windowName;
 
-	void (*m_FunctionCallbackOnWindowResize)(GLFWwindow* window, int width, int height);
+	void (*m_FunctionCallbackOnWindowResize)(GLFWwindow* window, int width, int height, 
+		int deltaWidth, int deltaHeight);
 
 	int InitGlfw();
 	int InitGlad();
