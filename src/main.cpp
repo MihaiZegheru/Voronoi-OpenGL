@@ -25,21 +25,19 @@ std::vector <VoronoiSeed*> seeds;
 
 
 /**
-* @brief Window resize Callback
+* @brief Window resize callback
+*
+* @param window
+* @param width
+* @param height
 *
 */
 void OnWindowResize(GLFWwindow* window, int width, int height) {
-    WINDOW_WIDTH = width;
-    WINDOW_HEIGHT = height;
-    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-
     for (size_t i = 0; i < seeds.size(); ++i) {
-        seeds[i]->SetMovementBounds(glm::vec2(WINDOW_WIDTH, WINDOW_HEIGHT));
+        seeds[i]->SetMovementBounds(glm::vec2(width, height));
     }
     // TO DO: Update positions
 }
-
-
 
 /**
 * @brief Generate random Voronoi Seeds
@@ -47,9 +45,12 @@ void OnWindowResize(GLFWwindow* window, int width, int height) {
 */
 void GenerateSeeds() {
     for (size_t i = 0; i < SEEDS_COUNT; ++i) {
+        int windowWidth = Window::GetInstance()->GetWindowWidth();
+        int windowHeight = Window::GetInstance()->GetWindowHeight();
+
         glm::vec2 position;
-        position.x = MathUtility::RandomFloat() * WINDOW_WIDTH;
-        position.y = MathUtility::RandomFloat() * WINDOW_HEIGHT;
+        position.x = MathUtility::RandomFloat() * windowWidth;
+        position.y = MathUtility::RandomFloat() * windowHeight;
 
         glm::vec4 color;
         color.x = MathUtility::RandomFloat();
@@ -64,20 +65,20 @@ void GenerateSeeds() {
 
         VoronoiSeed* seed = new VoronoiSeed(position, color);
         seed->SetVelocity(velocity);
-        seed->SetMovementBounds(glm::vec2(WINDOW_WIDTH, WINDOW_HEIGHT));
+        seed->SetMovementBounds(glm::vec2(windowWidth, windowHeight));
 
         seeds.push_back(seed);
     }
 }
 
 int main() {
-    Window window(WINDOW_WIDTH, WINDOW_HEIGHT, "Voronoi");
+    Window::GetInstance()->Init(WINDOW_WIDTH, WINDOW_HEIGHT, "Voronoi");
+    Window::GetInstance()->SetFunctionCallbackOnWindowResize(OnWindowResize);
 
     Time::GetInstance().Init(glfwGetTime());
 
     GLuint shaderProgram = Renderer::Init();
 
-    glfwSetFramebufferSizeCallback(window.GetInstance(), OnWindowResize);
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glClearColor(0.2, 0.2, 0.2, 1);
 
@@ -88,12 +89,12 @@ int main() {
     GLint seedMarkerColor = glGetUniformLocation(shaderProgram, "seedMarkerColor");
     glUniform2f(screenRes, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    glfwSetInputMode(window.GetInstance(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSetInputMode(Window::GetInstance()->GetGlfwInstance(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
     // Generate the Voronoi seeds
     GenerateSeeds();
 
-    while (!glfwWindowShouldClose(window.GetInstance())) {
+    while (!glfwWindowShouldClose(Window::GetInstance()->GetGlfwInstance())) {
         Time::GetInstance().ComputeDeltaTime(glfwGetTime());
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -122,13 +123,13 @@ int main() {
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         }
 
-        glfwSwapBuffers(window.GetInstance());
+        glfwSwapBuffers(Window::GetInstance()->GetGlfwInstance());
         glfwPollEvents();
     }
 
     Renderer::Destroy();
 
-    glfwDestroyWindow(window.GetInstance());
+    glfwDestroyWindow(Window::GetInstance()->GetGlfwInstance());
     glfwTerminate();
 
     return 0;

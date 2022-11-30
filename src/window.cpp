@@ -8,8 +8,18 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 
-Window::Window(int windowWidth, int windowHeight, const char* windowName)
-{
+static Window* m_instance;
+
+Window* Window::GetInstance() {
+    if (m_instance == nullptr) {
+        m_instance = new Window();
+    }
+
+    return m_instance;
+
+}
+
+void Window::Init(int windowWidth, int windowHeight, const char* windowName) {
     m_windowWidth = windowWidth;
     m_windowHeight = windowHeight;
     m_windowName = windowName;
@@ -18,32 +28,29 @@ Window::Window(int windowWidth, int windowHeight, const char* windowName)
     InitGlad();
 }
 
-Window::~Window()
-{
+Window::~Window() {
     Destroy();
 }
 
-int Window::CreateWindow()
-{
-    m_GlfwWindow = glfwCreateWindow(m_windowWidth, m_windowHeight, m_windowName, nullptr, nullptr);
 
+int Window::CreateWindow() {
+    m_GLFWWindow = glfwCreateWindow(m_windowWidth, m_windowHeight, m_windowName, nullptr, nullptr);
 
-    if (m_GlfwWindow == nullptr) {
+    if (m_GLFWWindow == nullptr) {
         Debug::LogError("Failed to create Window. Aborting...");
         glfwTerminate();
         return -1;
     }
 
-    glfwMakeContextCurrent(m_GlfwWindow);
+    glfwMakeContextCurrent(m_GLFWWindow);
+    glfwSetFramebufferSizeCallback(m_GLFWWindow, OnWindowResizeCallback);
 
     return 0;
 }
 
-int Window::InitGlfw()
-{
+int Window::InitGlfw() {
     int err = glfwInit();
-    if (!err)
-    {
+    if (!err) {
         Debug::LogError("Failed to Init GLFW. Aborting...");
         glfwTerminate();
         return err;
@@ -55,8 +62,7 @@ int Window::InitGlfw()
     return 0;
 }
 
-int Window::InitGlad()
-{
+int Window::InitGlad() {
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         Debug::LogError("Failed to Init Glad. Aborting...");
         //glfwTerminate();
@@ -71,9 +77,20 @@ int Window::InitGlad()
     return 0;
 }
 
-int Window::Destroy()
-{
-    glfwDestroyWindow(m_GlfwWindow);
+void Window::OnWindowResizeCallback(GLFWwindow* window, int width, int height) {
+    Window::GetInstance()->ResizeWindow(window, width, height);
+}
+
+void Window::ResizeWindow(GLFWwindow* window, int width, int height) {
+    m_windowWidth = width;
+    m_windowHeight = height;
+    glViewport(0, 0, m_windowWidth, m_windowHeight);
+
+    m_FunctionCallbackOnWindowResize(window, width, height);
+}
+
+int Window::Destroy() {
+    glfwDestroyWindow(m_GLFWWindow);
     glfwTerminate();
 
     return 0;
