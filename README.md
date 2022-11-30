@@ -21,6 +21,19 @@ cmake ..
 
 Compile and run the project.
 
+### Controls
+You can pause and unpause the animation by pressing `Q`
+
+The key is defined in `inputmanager.cpp`
+```cpp
+if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+    m_Q = true;
+}
+else {
+    m_Q = false;
+}
+```
+#
 
 ### Distances
 You can change the way the Voronoi diagram is rendered by manipulating the distances.
