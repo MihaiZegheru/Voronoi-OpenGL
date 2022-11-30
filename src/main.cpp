@@ -126,7 +126,6 @@ int main() {
                 seeds[i]->Tick(Time::GetInstance().GetDeltaTime());
             }
 
-
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             // Handle Draw
             for (size_t i = 0; i < seeds.size(); ++i) {

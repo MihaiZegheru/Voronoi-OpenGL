@@ -24,8 +24,14 @@ public:
 
     void Listen(GLFWwindow* window);
 
-    float GetAxis(std::string axis);
     glm::vec2 GetMousePosition() { return m_mousePosition; }
+
+	/**
+    * @brief Get Key pressed
+    *
+    * @param key
+    * @return bool
+    */
     bool GetKey(std::string key);
 
 private:
@@ -33,23 +39,9 @@ private:
 	InputManager(InputManager const&) = delete;
 	void operator= (InputManager const&) = delete;
 
-    float m_horizontal;
-    float m_vertical;
-
-    bool m_jump;
-    bool m_leftshift;
-
     bool m_Q;
 
     glm::vec2 m_mousePosition;
-
-	static void KeyPressed(GLFWwindow* window, int key, int scancode, int action, int mods)
-	{
-		if (key == GLFW_KEY_W && action == GLFW_PRESS)
-		{
-
-		}
-	}
 };
 
 #endif  // SRC_INPUTMANAGER_H__
