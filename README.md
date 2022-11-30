@@ -7,7 +7,7 @@ OpenGL project that generates a Voronoi diagram with moving seeds
   src="https://user-images.githubusercontent.com/45045543/204884686-16e7083c-eff8-4ace-b5ad-de005d8ee0b6.png"
   alt="Euclidean Distances"
   title="Euclidean Distances"
-  style="display: inline-block; margin: auto; padding: auto; width: 97%">
+  style="display: inline-block; margin: auto; padding: auto; width: auto">
 
 ## Installing
 
@@ -60,17 +60,17 @@ gl_FragDepth =  MinkowskiDistance(seedPos, gl_FragCoord.xy, MINKOWSKI_VALUE) / l
   src="https://user-images.githubusercontent.com/45045543/204848704-8e901701-cb38-4fb9-9c85-9e1a6c1dcd2e.PNG"
   alt="Euclidean Distances"
   title="Euclidean Distances"
-  style="display: inline-block; margin: auto; padding: auto; width: 32.9%">
+  style="display: inline-block; margin: auto; padding: auto; width: 32.8%">
 <img
   src="https://user-images.githubusercontent.com/45045543/204849744-62c0fee6-e63a-414c-8a74-243da4cdd743.PNG"
   alt="MinkowskiDistance"
   title="MinkowskiDistance"
-  style="display: inline-block; margin:auto; padding: auto; width: 32.9%">
+  style="display: inline-block; margin:auto; padding: auto; width: 32.8%">
 <img
   src="https://user-images.githubusercontent.com/45045543/204849749-24c458f6-07e4-40ca-a67b-0ab9df4b91d3.PNG"
   alt="Manhattan Distances"
   title="Manhattan Distances"
-  style="display: inline-block; margin: auto; padding: auto; width: 32.9%">
+  style="display: inline-block; margin: auto; padding: auto; width: 32.8%">
 
 #
 
