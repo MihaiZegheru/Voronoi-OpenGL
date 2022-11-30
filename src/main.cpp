@@ -82,19 +82,16 @@ int main() {
     int windowHeight = Window::GetInstance()->GetWindowHeight();
 
     Time::GetInstance().Init(glfwGetTime());
-
     InputManager& inputManager = InputManager::GetInstance();
-
     GLuint shaderProgram = Renderer::Init();
 
+    // Set uniforms
     GLint screenRes = glGetUniformLocation(shaderProgram, "screenRes");
     GLint seedPos = glGetUniformLocation(shaderProgram, "seedPos");
     GLint seedColor = glGetUniformLocation(shaderProgram, "seedColor");
     GLint seedMarkerRadius = glGetUniformLocation(shaderProgram, "seedMarkerRadius");
     GLint seedMarkerColor = glGetUniformLocation(shaderProgram, "seedMarkerColor");
     glUniform2f(screenRes, (GLfloat)windowWidth, (GLfloat)windowHeight);
-
-    glfwSetInputMode(Window::GetInstance()->GetGlfwInstance(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
     // Generate the Voronoi seeds
     GenerateSeeds();

@@ -1,5 +1,8 @@
 #include <input/inputmanager.h>
 
+#include <window/window.h>
+
+
 InputManager& InputManager::GetInstance() {
 		static InputManager instance;
 		return instance;
@@ -30,6 +33,7 @@ bool InputManager::GetKey(std::string key) {
 }
 
 InputManager::InputManager() {
+    glfwSetInputMode(Window::GetInstance()->GetGlfwInstance(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     m_Q = false;
     m_mousePosition = glm::vec2(0, 0);
 }
