@@ -43,8 +43,8 @@ You can also change the number of seeds(voronoi generators) by changing this fie
 ```cpp
 #define SEEDS_COUNT 10
 ```
-**Note**
-Please note that the seeds are generated randomly and there is no current implementation of a special noise function.
+>**Note**
+The seeds are generated randomly and there is no current implementation of a special noise function. This is the same for the colors.
 #
 
 ### Window Size
