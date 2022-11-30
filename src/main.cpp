@@ -98,6 +98,7 @@ int main() {
 
     bool lastPauseButtonState = false;
     bool isPaused = false;
+    Renderer::GenerateDummyVAO();
 
     while (!glfwWindowShouldClose(Window::GetInstance()->GetGlfwInstance())) {
         
@@ -113,9 +114,11 @@ int main() {
         windowWidth = Window::GetInstance()->GetWindowWidth();
         windowHeight = Window::GetInstance()->GetWindowHeight();
 
+        
+
         if (!isPaused) {
             // UPDATE
-            Renderer::GenerateDummyVAO();
+    
 
             // Make a determinstic random sys
             srand(0);
