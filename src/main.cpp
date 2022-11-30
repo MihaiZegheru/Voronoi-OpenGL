@@ -39,6 +39,7 @@ void OnWindowResize(GLFWwindow* window, int width, int height, int deltaWidth, i
         glm::vec2 newPosition = seeds[i]->GetPosition() + glm::vec2(deltaWidth, deltaHeight);
         seeds[i]->SetPosition(newPosition);
     }
+    // TO DO: Fix bug when seeds disappear 
 }
 
 /**

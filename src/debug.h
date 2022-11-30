@@ -4,7 +4,7 @@
 #include <string>
 #include <glm/glm.hpp>
 
-static class Debug
+class Debug
 {
 public:
 	static void Log(std::string msg);

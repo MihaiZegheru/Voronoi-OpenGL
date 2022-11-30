@@ -42,6 +42,7 @@ private:
     bool m_Q;
 
     glm::vec2 m_mousePosition;
+
 };
 
 #endif  // SRC_INPUTMANAGER_H__

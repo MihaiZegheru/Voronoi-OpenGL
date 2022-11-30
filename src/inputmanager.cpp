@@ -15,8 +15,8 @@ void InputManager::Listen(GLFWwindow* window) {
 
     double mouseX, mouseY;
     glfwGetCursorPos(window, &mouseY, &mouseX);
-    m_mousePosition.x = mouseX;
-    m_mousePosition.y = mouseY;
+    m_mousePosition.x = (float)mouseX;
+    m_mousePosition.y = (float)mouseY;
 }
 
 
@@ -25,6 +25,8 @@ bool InputManager::GetKey(std::string key) {
     {
         return m_Q;
     }
+
+    return 0;
 }
 
 InputManager::InputManager() {
