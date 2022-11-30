@@ -13,6 +13,7 @@
 #include <mathutility.h>
 #include <apptime.h>
 #include <renderer.h>
+#include <inputmanager.h>
 #include <debug.h>
 
 
@@ -80,10 +81,9 @@ int main() {
 
     Time::GetInstance().Init(glfwGetTime());
 
-    GLuint shaderProgram = Renderer::Init();
+    InputManager& inputManager = InputManager::GetInstance();
 
-    glViewport(0, 0, windowWidth, windowHeight);
-    glClearColor(0.2, 0.2, 0.2, 1);
+    GLuint shaderProgram = Renderer::Init();
 
     GLint screenRes = glGetUniformLocation(shaderProgram, "screenRes");
     GLint seedPos = glGetUniformLocation(shaderProgram, "seedPos");
@@ -97,36 +97,51 @@ int main() {
     // Generate the Voronoi seeds
     GenerateSeeds();
 
+    bool lastPauseButtonState = false;
+    bool isPaused = false;
+
     while (!glfwWindowShouldClose(Window::GetInstance()->GetGlfwInstance())) {
+        
         Time::GetInstance().ComputeDeltaTime(glfwGetTime());
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        inputManager.Listen(Window::GetInstance()->GetGlfwInstance());
+
+        if (inputManager.GetKey("pause") && !lastPauseButtonState) {
+            isPaused = !isPaused;
+        }
+
+        lastPauseButtonState = inputManager.GetKey("pause");
+
         windowWidth = Window::GetInstance()->GetWindowWidth();
         windowHeight = Window::GetInstance()->GetWindowHeight();
 
-        //Debug::Log(1.f / Time::GetInstance().GetDeltaTime());
-        Renderer::GenerateDummyVAO();
-        
-        // Make a determinstic random sys
-        srand(0);
+        if (!isPaused) {
+            // UPDATE
+            Renderer::GenerateDummyVAO();
 
-        // Handle Tick()
-        for (size_t i = 0; i < seeds.size(); ++i) {
-            seeds[i]->Tick(Time::GetInstance().GetDeltaTime());
-        }
+            // Make a determinstic random sys
+            srand(0);
 
-        // Handle Draw
-        for (size_t i = 0; i < seeds.size(); ++i) {
-            glm::vec2 position = seeds[i]->GetPosition();
-            glm::vec4 color = seeds[i]->GetColor();
-            float markerRadius = seeds[i]->GetMarkerRadius();
-            glm::vec4 markerColor = seeds[i]->GetMarkerColor();
+            // Handle Tick()
+            for (size_t i = 0; i < seeds.size(); ++i) {
+                seeds[i]->Tick(Time::GetInstance().GetDeltaTime());
+            }
 
-            glUniform2f(screenRes, windowWidth, windowHeight);
-            glUniform2f(seedPos, position.x, position.y);
-            glUniform4f(seedColor, color.x, color.y, color.z, color.w);
-            glUniform1f(seedMarkerRadius, markerRadius);
-            glUniform4f(seedMarkerColor, markerColor.x, markerColor.y, markerColor.z, markerColor.w);
-            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            // Handle Draw
+            for (size_t i = 0; i < seeds.size(); ++i) {
+                glm::vec2 position = seeds[i]->GetPosition();
+                glm::vec4 color = seeds[i]->GetColor();
+                float markerRadius = seeds[i]->GetMarkerRadius();
+                glm::vec4 markerColor = seeds[i]->GetMarkerColor();
+
+                glUniform2f(screenRes, windowWidth, windowHeight);
+                glUniform2f(seedPos, position.x, position.y);
+                glUniform4f(seedColor, color.x, color.y, color.z, color.w);
+                glUniform1f(seedMarkerRadius, markerRadius);
+                glUniform4f(seedMarkerColor, markerColor.x, markerColor.y, markerColor.z, markerColor.w);
+                glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+            }
         }
 
         glfwSwapBuffers(Window::GetInstance()->GetGlfwInstance());

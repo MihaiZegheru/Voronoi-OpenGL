@@ -26,6 +26,9 @@ void Window::Init(int windowWidth, int windowHeight, const char* windowName) {
     InitGlfw();
     CreateWindow();
     InitGlad();
+
+    glViewport(0, 0, windowWidth, windowHeight);
+    glClearColor(0.1, 0.1, 0.1, 1);
 }
 
 Window::~Window() {

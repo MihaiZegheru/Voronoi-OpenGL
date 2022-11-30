@@ -14,6 +14,7 @@ set(HEADERS
 	"src/debug.h"
 	"src/voronoiseed.h"
 	"src/mathutility.h"
+	"src/inputmanager.h"
 )
 set(IMPLEMENTATION 
 	"src/main.cpp"
@@ -23,6 +24,7 @@ set(IMPLEMENTATION
 	"src/debug.cpp"
 	"src/voronoiseed.cpp"
 	"src/mathutility.cpp"
+	"src/inputmanager.cpp"
 )
 
 set(LIBS "lib/glad/src/glad.c")
