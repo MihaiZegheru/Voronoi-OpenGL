@@ -6,22 +6,22 @@ OpenGL project that generates a Voronoi diagram with moving seeds
   src="https://user-images.githubusercontent.com/45045543/204848704-8e901701-cb38-4fb9-9c85-9e1a6c1dcd2e.PNG"
   alt="Euclidean Distances"
   title="Euclidean Distances"
-  style="display: inline-block; margin: 10 auto; width: 40%">
+  style="display: inline-block; margin: auto; padding: auto; width: 40%">
     <img
   src="https://user-images.githubusercontent.com/45045543/204849749-24c458f6-07e4-40ca-a67b-0ab9df4b91d3.PNG"
   alt="Manhattan Distances"
   title="Manhattan Distances"
-  style="display: inline-block; margin: 10 auto; width: 40%">
+  style="display: inline-block; margin: auto; padding: auto; width: 40%">
   <img
   src="https://user-images.githubusercontent.com/45045543/204849744-62c0fee6-e63a-414c-8a74-243da4cdd743.PNG"
   alt="MinkowskiDistance"
   title="MinkowskiDistance"
-  style="display: inline-block; margin: 10 auto; width: 40%">
+  style="display: inline-block; margin:auto; padding: auto; width: 40%">
     <img
   src="https://user-images.githubusercontent.com/45045543/204849751-c8411450-71a0-46f0-9c1a-7a384e13ffb7.PNG"
   alt="MinkowskiDistance"
   title="MinkowskiDistance"
-  style="display: inline-block; margin: 10 auto; width: 40%">
+  style="display: inline-block; margin: auto; padding: auto; width: 40%">
 
 ## Installing
 
