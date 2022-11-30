@@ -85,14 +85,14 @@ void Window::OnWindowResizeCallback(GLFWwindow* window, int width, int height) {
 }
 
 void Window::ResizeWindow(GLFWwindow* window, int width, int height) {
-    int deltaWidth = width - m_windowWidth;
-    int deltaHeight = height - m_windowHeight;
+    int oldWidth = m_windowWidth;
+    int oldHeight = m_windowHeight;
 
     m_windowWidth = width;
     m_windowHeight = height;
     glViewport(0, 0, m_windowWidth, m_windowHeight);
 
-    m_FunctionCallbackOnWindowResize(window, width, height, deltaWidth, deltaHeight);
+    m_FunctionCallbackOnWindowResize(window, width, height, oldWidth, oldHeight);
 }
 
 int Window::Destroy() {

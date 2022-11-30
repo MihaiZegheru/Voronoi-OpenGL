@@ -17,13 +17,12 @@
 #include <debug.h>
 
 
-int WINDOW_WIDTH = 500;
-int WINDOW_HEIGHT = 500;
+int WINDOW_WIDTH = 400;
+int WINDOW_HEIGHT = 400;
 
-#define SEEDS_COUNT 3
+#define SEEDS_COUNT 6
 
 std::vector <VoronoiSeed*> seeds;
-
 
 /**
 * @brief Window resize callback
@@ -33,11 +32,15 @@ std::vector <VoronoiSeed*> seeds;
 * @param height
 *
 */
-void OnWindowResize(GLFWwindow* window, int width, int height, int deltaWidth, int deltaHeight) {
+void OnWindowResize(GLFWwindow* window, int width, int height, int oldWidth, int oldHeight) {
+
     for (size_t i = 0; i < seeds.size(); ++i) {
         seeds[i]->SetMovementBounds(glm::vec2(width, height));
-        glm::vec2 newPosition = seeds[i]->GetPosition() + glm::vec2(deltaWidth, deltaHeight);
-        seeds[i]->SetPosition(newPosition);
+        glm::vec2 currPosition = seeds[i]->GetPosition();
+
+        float newX = currPosition.x * (width / oldWidth);
+        float newY = currPosition.y * (height / oldHeight);
+        seeds[i]->SetPosition(glm::vec2(newX, newY));
     }
     // TO DO: Fix bug when seeds disappear 
 }
@@ -61,10 +64,10 @@ void GenerateSeeds() {
         color.z = MathUtility::RandomFloat();
         color.w = 1.f;
 
-        // TO DO: Add negative velocity
         glm::vec2 velocity;
         velocity.x = MathUtility::Lerp(50, 200, MathUtility::RandomFloat()) * ((MathUtility::RandomFloat() < .5f) ? 1 : -1);
         velocity.y = MathUtility::Lerp(50, 200, MathUtility::RandomFloat()) * ((MathUtility::RandomFloat() < .5f) ? 1 : -1);
+        Debug::Log(velocity.x);
 
         VoronoiSeed* seed = new VoronoiSeed(position, color);
         seed->SetVelocity(velocity);
