@@ -20,10 +20,10 @@ cmake ..
 ## Usage
 
 Compile and run the project.
-#
+
 
 ### Distances
-You can change the way the Voronoi diagram is rendered by manipulating the distances 
+You can change the way the Voronoi diagram is rendered by manipulating the distances.
 ```cpp
 float EuclideanDistance(vec2 a, vec2 b);
 float ManhattanDistance(vec2 a, vec2 b);
@@ -31,7 +31,7 @@ float ChebyshevDistance(vec2 a, vec2 b);
 float MinkowskiDistance(vec2 a, vec2 b, float p);
 ```
 
-Change the function on this line in `defaultfragmentshader.glsl`.
+Change the function on this line in `defaultfragmentshader.glsl`
 
 ```cpp
 gl_FragDepth =  MinkowskiDistance(seedPos, gl_FragCoord.xy, MINKOWSKI_VALUE) / length(screenRes);
@@ -54,6 +54,12 @@ You can set the initial window size by changing these fields in `main.cpp`
 #define WINDOW_HEIGHT 1000;
 ```
 
+## Credits
+[How I got the idea](https://www.youtube.com/watch?v=kT-Mz87-HcQ)
+
+[About distances](https://towardsdatascience.com/9-distance-measures-in-data-science-918109d069fa)
+
+
 ## License
 
-[MIT](https://github.com/MihaiZegheru/Voronoi-OpenGL/blob/main/LICENSE)
+Voronoi-OpenGL is released under [MIT License](https://github.com/MihaiZegheru/Voronoi-OpenGL/blob/main/LICENSE).
